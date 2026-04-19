@@ -149,7 +149,8 @@ The model trained for 29 epochs with the following progression:
 
 
 Training charts available in `ai/charts/` directory:
-- `00_dashboard.png` — full pipeline dashboard
+- `<img width="2004" height="1630" alt="image" src="https://github.com/user-attachments/assets/e2806a34-4463-4e9e-8ca2-c44d40da89a9" />
+` — full pipeline dashboard
 - `01_loss_curves.png` — train vs val loss
 - `02_accuracy_curves.png` — train vs val accuracy
 - `03_lr_schedule.png` — learning rate schedule
