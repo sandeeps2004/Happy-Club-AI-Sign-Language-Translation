@@ -1,4 +1,4 @@
-# AI Sign Language Translation
+# Happy Club - AI Sign Language Translation
 
 Real-time Indian Sign Language (ISL) recognition system that translates webcam video of sign language into natural English sentences. Built with Django, WebSockets, a BiLSTM deep learning model, and RTMPose for skeleton tracking.
 
@@ -127,8 +127,8 @@ Trained on the [INCLUDE ISL dataset](https://zenodo.org/records/4010759) — a l
 
 ```bash
 # Clone
-git clone https://gitlab.com/students-project/ai-sign-language.git
-cd ai-sign-language
+git clone https://github.com/sandeeps2004/Happy-Club-AI-Sign-Language-Translation.git
+cd cd Happy-Club-AI-Sign-Language-Translation
 
 # Virtual environment
 python -m venv venv
@@ -245,4 +245,23 @@ pytest tests/
 
 ## License
 
-This project is part of an academic/student project at [GitLab](https://gitlab.com/students-project/ai-sign-language).
+MIT License
+
+Copyright (c) 2026 Sandeep Sahu
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+**Happy Club - AI Sign Language Translation**
+
