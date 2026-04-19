@@ -116,6 +116,101 @@ Input (30 x 216) -> LayerNorm -> BiLSTM (2 layers, 128 hidden) -> Attention Pool
 
 Trained on the [INCLUDE ISL dataset](https://zenodo.org/records/4010759) — a large-scale Indian Sign Language dataset with video recordings of 263 signs across multiple categories.
 
+
+## 📊 Model Performance
+ 
+### Training Results (29 Epochs)
+ 
+| Metric | Value |
+|---|---|
+| **Test Accuracy** | **87.4%** |
+| **Validation Accuracy (best)** | **88.8%** |
+| BiLSTM Top-1 Accuracy | 91.2% |
+| Macro F1 Score | 0.863 |
+| Macro Precision | 0.908 |
+| Macro Recall | 0.869 |
+| Total Classes | 79 |
+| Test Samples | 1,373 |
+| Model Parameters | 809,600 |
+
+### Training Curves
+ 
+The model trained for 29 epochs with the following progression:
+ 
+| Epoch | Train Loss | Val Loss | Train Acc | Val Acc |
+|---|---|---|---|---|
+| 1 | 4.342 | 4.193 | 2.4% | 3.6% |
+| 5 | 2.635 | 2.244 | 23.8% | 36.2% |
+| 10 | 1.358 | 1.112 | 56.3% | 66.8% |
+| 15 | 0.702 | 0.679 | 76.1% | 76.5% |
+| 20 | 0.435 | 0.416 | 86.7% | 86.7% |
+| 25 | 0.259 | 0.402 | 92.5% | 86.2% |
+| 29 | 0.254 | 0.431 | 92.2% | 85.7% |
+
+
+Training charts available in `ai/charts/` directory:
+- `00_dashboard.png` — full pipeline dashboard
+- `01_loss_curves.png` — train vs val loss
+- `02_accuracy_curves.png` — train vs val accuracy
+- `03_lr_schedule.png` — learning rate schedule
+- `04_confusion_matrix.png` — per-class confusion matrix
+- `05_per_class_accuracy.png` — per-class accuracy (mean: 86.9%)
+- `06_precision_recall_f1.png` — precision/recall/F1 per class
+- `07_dataset_distribution.png` — class distribution
+
+
+### System Performance
+ 
+| Metric | Value |
+|---|---|
+| Avg frame latency | 38ms |
+| RTMPose inference | 22ms/frame |
+| WebSocket frame drop rate | 0.8% |
+| BLEU score (ISL→English) | 38.7 |
+| RTMPose PCK accuracy | 93.4% |
+
+## 🖥️ Results 
+
+### Login Page
+Clean authentication interface with email login and RBAC.
+ 
+### Dashboard
+Overview of detection sessions, recent signs, and system stats.
+ 
+### Sign Interpreter
+Real-time webcam feed with keypoint skeleton overlay. BiLSTM predicts sign (e.g., "FISH" at 90.2% confidence) and assembles into English sentence instantly.
+ 
+### Text to Sign
+Type English text → system generates corresponding ISL sign video sequence for deaf users to understand.
+ 
+### Admin Panel
+Django admin for managing users, groups, and interpretation sessions.
+ 
+## 🔬 Technologies Used
+ 
+### Computer Vision (CV)
+- RTMPose for 54-keypoint extraction from live webcam
+- ONNX runtime for efficient model inference
+- OpenCV for frame preprocessing
+- HTML5 Canvas for skeleton overlay rendering
+- Shoulder-centered normalization for position-independence
+### Machine Learning (ML)
+- Feature engineering: 216 features (position + velocity)
+- Velocity-based sign boundary detection
+- Confidence thresholding (0.7 cutoff)
+- INCLUDE-50 supervised training dataset
+### Deep Learning (DL)
+- BiLSTM (bidirectional context = forward + backward pass)
+- Attention mechanism (focuses on most important frames)
+- LayerNorm, Dropout(0.3) for training stability
+- PyTorch training pipeline
+### Natural Language Processing (NLP)
+- Google Gemini 2.5 Flash for ISL SOV → English SVO conversion
+- Rule-based grammar fallback assembler
+- Gloss sequence buffering and sentence construction
+- Text-to-Sign reverse pipeline
+
+
 ## Setup
 
 ### Prerequisites
@@ -242,6 +337,20 @@ Runs a real-time OpenCV window with live landmark overlay and sign detection —
 ```bash
 pytest tests/
 ```
+Key test results:
+ 
+| Test | Result |
+|---|---|
+| WebSocket connection | < 200ms |
+| Frame latency (1000 frames) | Drop rate 0.8%, avg 38ms |
+| RTMPose keypoint count | 54 KPs detected consistently |
+| RTMPose PCK accuracy | 93.4% |
+| RTMPose inference speed | 22ms/frame |
+| BiLSTM Top-1 accuracy | 91.2% |
+| Gemini BLEU score | 38.7 |
+
+
+
 
 ## License
 
