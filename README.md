@@ -1,4 +1,4 @@
-# AI Sign Language Interpreter
+# AI Sign Language Translation
 
 Real-time Indian Sign Language (ISL) recognition system that translates webcam video of sign language into natural English sentences. Built with Django, WebSockets, a BiLSTM deep learning model, and RTMPose for skeleton tracking.
 
