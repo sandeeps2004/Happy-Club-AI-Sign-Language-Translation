@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#fafafa">
+    <title>{% block title %}{{ APP_NAME }} — Sign Language AI{% endblock %}</title>
+
+    {# Fonts #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    {# Tailwind #}
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        accent:  '#f97316',
+                        ink:     '#0f172a',
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+
+    {# Alpine + HTMX #}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.8/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+
+    {# Happy Club CSS #}
+    <link rel="stylesheet" href="{% static 'css/happy_club.css' %}">
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body x-data="{ mobileOpen: false }"
+      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'
+      class="min-h-screen flex flex-col">
+
+    {% include "includes/topnav.html" %}
+
+    {% include "includes/messages.html" %}
+
+    <main class="flex-1">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="border-t border-[var(--hc-border-soft)] mt-16">
+        <div class="max-w-7xl mx-auto px-6 lg:px-10 py-8 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div class="flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-lg bg-primary flex items-center justify-center text-white">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10.05 4.575a1.575 1.575 0 1 0-3.15 0v3m3.15-3v-1.5a1.575 1.575 0 0 1 3.15 0v1.5m-3.15 0 .075 5.925m3.075-5.925v3m0-3a1.575 1.575 0 0 1 3.15 0v3.75m0 0v2.018a3 3 0 0 1-.879 2.121l-2.377 2.377a3.622 3.622 0 0 1-.68.523M7.5 14.25a3 3 0 0 0-.621-1.833L5.131 9.948A1.575 1.575 0 0 0 2.4 11.523v.002c0 .468.11.93.321 1.35l.803 1.603A5.625 5.625 0 0 0 8.558 18h3.567a3.622 3.622 0 0 0 2.062-.68"/>
+                    </svg>
+                </div>
+                <span class="text-[13px] font-semibold text-ink">{{ APP_NAME|default:"Happy Club" }}</span>
+            </div>
+            <p class="text-[12px] text-muted">
+                Made with <span class="text-accent">🤟</span> for the Deaf community
+            </p>
+        </div>
+    </footer>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

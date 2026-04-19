@@ -1,0 +1,497 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Happy Club — Sign Language AI
+   Clean light SaaS · blue + orange accent · Plus Jakarta Sans
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   1. DESIGN TOKENS
+   ─────────────────────────────────────────────────────────────────────────── */
+:root {
+    /* Surfaces */
+    --hc-bg:           #fafafa;
+    --hc-bg-muted:     #f3f4f6;
+    --hc-card:         #ffffff;
+    --hc-border:       #e5e7eb;
+    --hc-border-soft:  #f0f1f3;
+
+    /* Text */
+    --hc-text:         #0f172a;
+    --hc-text-soft:    #334155;
+    --hc-text-muted:   #6b7280;
+    --hc-text-faint:   #9ca3af;
+
+    /* Brand */
+    --hc-primary:      #2563eb;
+    --hc-primary-hov:  #1d4ed8;
+    --hc-primary-soft: #eff6ff;
+    --hc-accent:       #f97316;     /* orange — for emphasis word in headlines */
+    --hc-accent-soft:  #fff7ed;
+
+    /* Status */
+    --hc-success:      #10b981;
+    --hc-warning:      #f59e0b;
+    --hc-error:        #ef4444;
+
+    /* Dark hero panel (used on auth split layout) */
+    --hc-hero-bg:      #0f172a;     /* navy */
+    --hc-hero-bg-2:    #1e293b;
+    --hc-hero-text:    #f8fafc;
+    --hc-hero-muted:   rgba(255, 255, 255, 0.65);
+
+    /* Motion */
+    --hc-ease:         cubic-bezier(0.4, 0, 0.2, 1);
+    --hc-ease-soft:    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   2. PAGE BASE
+   ─────────────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+
+body {
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--hc-bg);
+    color: var(--hc-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   3. TOP NAVIGATION
+   ─────────────────────────────────────────────────────────────────────────── */
+.hc-nav {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    background: rgba(255, 255, 255, 0.85);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+            backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid var(--hc-border-soft);
+}
+
+.hc-nav-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    background: var(--hc-bg-muted);
+    border-radius: 999px;
+    padding: 4px;
+}
+.hc-nav-link {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--hc-text-muted);
+    transition: all 150ms var(--hc-ease);
+}
+.hc-nav-link:hover { color: var(--hc-text); }
+.hc-nav-link.is-active {
+    background: var(--hc-card);
+    color: var(--hc-text);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--hc-border-soft);
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   4. CARDS
+   ─────────────────────────────────────────────────────────────────────────── */
+.hc-card {
+    background: var(--hc-card);
+    border: 1px solid var(--hc-border);
+    border-radius: 16px;
+    transition: border-color 150ms var(--hc-ease), box-shadow 150ms var(--hc-ease);
+}
+.hc-card-hover { transition: all 200ms var(--hc-ease); }
+.hc-card-hover:hover {
+    border-color: #d1d5db;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   5. BUTTONS
+   ─────────────────────────────────────────────────────────────────────────── */
+.hc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 14px;
+    padding: 0.7rem 1.25rem;
+    transition: all 150ms var(--hc-ease);
+    cursor: pointer;
+    border: 1px solid transparent;
+    line-height: 1;
+    white-space: nowrap;
+}
+.hc-btn-primary {
+    background: var(--hc-primary);
+    color: #ffffff;
+    border-color: var(--hc-primary);
+}
+.hc-btn-primary:hover {
+    background: var(--hc-primary-hov);
+    border-color: var(--hc-primary-hov);
+    box-shadow: 0 8px 20px -8px rgba(37, 99, 235, 0.5);
+    transform: translateY(-1px);
+}
+.hc-btn-outline {
+    background: var(--hc-card);
+    color: var(--hc-text);
+    border-color: var(--hc-border);
+}
+.hc-btn-outline:hover {
+    background: var(--hc-bg-muted);
+    border-color: #d1d5db;
+}
+.hc-btn-accent {
+    background: var(--hc-accent);
+    color: #ffffff;
+    border-color: var(--hc-accent);
+}
+.hc-btn-accent:hover {
+    background: #ea580c;
+    border-color: #ea580c;
+    box-shadow: 0 8px 20px -8px rgba(249, 115, 22, 0.5);
+    transform: translateY(-1px);
+}
+.hc-btn-ghost {
+    background: transparent;
+    color: var(--hc-text-soft);
+    border-color: transparent;
+}
+.hc-btn-ghost:hover {
+    background: var(--hc-bg-muted);
+    color: var(--hc-text);
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   6. INPUTS
+   ─────────────────────────────────────────────────────────────────────────── */
+.hc-input,
+.hc-card form input[type="text"],
+.hc-card form input[type="email"],
+.hc-card form input[type="password"],
+.hc-card form input[type="tel"],
+.hc-card form input[type="url"],
+.hc-card form input[type="number"],
+.hc-card form select,
+.hc-card form textarea {
+    width: 100%;
+    background: var(--hc-card);
+    border: 1px solid var(--hc-border);
+    border-radius: 10px;
+    padding: 0.7rem 0.95rem;
+    font-size: 14px;
+    color: var(--hc-text);
+    font-family: inherit;
+    transition: all 150ms var(--hc-ease);
+}
+.hc-input::placeholder,
+.hc-card form input::placeholder,
+.hc-card form textarea::placeholder { color: var(--hc-text-faint); }
+.hc-input:focus,
+.hc-card form input:focus,
+.hc-card form select:focus,
+.hc-card form textarea:focus {
+    outline: none;
+    border-color: var(--hc-primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   7. PILLS / BADGES
+   ─────────────────────────────────────────────────────────────────────────── */
+.hc-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.65rem;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+}
+.hc-pill-primary { background: var(--hc-primary-soft); color: var(--hc-primary); }
+.hc-pill-accent  { background: var(--hc-accent-soft);  color: #c2410c; }
+.hc-pill-success { background: #ecfdf5; color: #047857; }
+.hc-pill-warning { background: #fffbeb; color: #b45309; }
+.hc-pill-error   { background: #fef2f2; color: #b91c1c; }
+.hc-pill-muted   { background: var(--hc-bg-muted); color: var(--hc-text-muted); }
+.hc-pill-live::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 999px;
+    background: currentColor;
+    animation: hc-pulse 1.6s ease-in-out infinite;
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   8. CONFIDENCE BAR
+   ─────────────────────────────────────────────────────────────────────────── */
+.hc-confidence {
+    height: 4px;
+    background: var(--hc-border-soft);
+    border-radius: 999px;
+    overflow: hidden;
+}
+.hc-confidence-fill {
+    height: 100%;
+    background: var(--hc-primary);
+    border-radius: 999px;
+    transition: width 600ms var(--hc-ease-soft);
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   9. ACTIVITY TIMELINE
+   ─────────────────────────────────────────────────────────────────────────── */
+.hc-feed-item {
+    position: relative;
+    padding-left: 1.5rem;
+    padding-bottom: 1.25rem;
+}
+.hc-feed-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 5px; top: 14px; bottom: 0;
+    width: 1px;
+    background: var(--hc-border);
+}
+.hc-feed-dot {
+    position: absolute;
+    left: 0; top: 4px;
+    width: 11px; height: 11px;
+    border-radius: 999px;
+    border: 2px solid var(--hc-card);
+    box-shadow: 0 0 0 1px currentColor;
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   10. INTERPRETER — DETECTION RING (subtle blue pulse on dark camera bg)
+   ─────────────────────────────────────────────────────────────────────────── */
+.hc-detect-ring {
+    position: relative;
+    width: 200px; height: 200px;
+}
+.hc-detect-ring__inner,
+.hc-detect-ring__outer,
+.hc-detect-ring__dashed {
+    position: absolute;
+    inset: 0;
+    border-radius: 999px;
+}
+.hc-detect-ring__inner {
+    inset: 30px;
+    border: 2px solid rgba(96, 165, 250, 0.7);
+    box-shadow: 0 0 30px rgba(37, 99, 235, 0.25), inset 0 0 30px rgba(37, 99, 235, 0.15);
+    animation: hc-detect-pulse 2.4s ease-in-out infinite;
+}
+.hc-detect-ring__outer {
+    border: 1px solid rgba(96, 165, 250, 0.35);
+    animation: hc-detect-pulse 2.4s ease-in-out 0.4s infinite;
+}
+.hc-detect-ring__dashed {
+    inset: -10px;
+    border: 1px dashed rgba(96, 165, 250, 0.4);
+    animation: hc-rotate 22s linear infinite;
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   11. SPLIT AUTH PANEL (dark left panel for login/register)
+   ─────────────────────────────────────────────────────────────────────────── */
+.hc-hero-panel {
+    background:
+        radial-gradient(ellipse 60% 40% at 30% 20%, rgba(37, 99, 235, 0.25) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(249, 115, 22, 0.15) 0%, transparent 50%),
+        var(--hc-hero-bg);
+    color: var(--hc-hero-text);
+    position: relative;
+    overflow: hidden;
+}
+.hc-hero-panel::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+        radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.06) 1px, transparent 0);
+    background-size: 28px 28px;
+    pointer-events: none;
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   12. TYPOGRAPHY HELPERS
+   ─────────────────────────────────────────────────────────────────────────── */
+.hc-headline {
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+    color: var(--hc-text);
+}
+.hc-accent-word {
+    color: var(--hc-accent);
+}
+.hc-gradient-word {
+    background: linear-gradient(120deg, var(--hc-primary) 0%, #7c3aed 50%, var(--hc-accent) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   13. ANIMATIONS
+   ─────────────────────────────────────────────────────────────────────────── */
+@keyframes hc-pulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50%      { opacity: 1;   transform: scale(1.3); }
+}
+@keyframes hc-detect-pulse {
+    0%, 100% { transform: scale(1);    opacity: 0.95; }
+    50%      { transform: scale(1.08); opacity: 0.5; }
+}
+@keyframes hc-rotate {
+    from { transform: rotate(0deg); }
+    to   { transform: rotate(360deg); }
+}
+@keyframes hc-fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.hc-fade-up { animation: hc-fade-up 0.5s var(--hc-ease-soft) both; }
+.hc-delay-1 { animation-delay: 60ms;  }
+.hc-delay-2 { animation-delay: 130ms; }
+.hc-delay-3 { animation-delay: 200ms; }
+.hc-delay-4 { animation-delay: 270ms; }
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   14. FOCUS / A11Y
+   ─────────────────────────────────────────────────────────────────────────── */
+:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.30);
+    border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hc-fade-up,
+    .hc-detect-ring__inner,
+    .hc-detect-ring__outer,
+    .hc-detect-ring__dashed,
+    .hc-pill-live::before { animation: none !important; }
+    * { transition-duration: 0ms !important; }
+}
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   15. SCROLLBARS
+   ─────────────────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+.hc-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+.hc-scroll::-webkit-scrollbar-thumb { background: #e5e7eb; border-radius: 999px; }
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   16b. DASHBOARD — IMMERSIVE PREVIEW & THEME BAND
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* Live preview card — dark camera mock */
+.hc-preview-card {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-radius: 24px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 24px 60px -20px rgba(15, 23, 42, 0.25);
+}
+.hc-preview-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.05) 1px, transparent 0);
+    background-size: 28px 28px;
+    pointer-events: none;
+}
+
+/* Animated hand stroke draw-in */
+@keyframes hc-draw {
+    from { stroke-dashoffset: 1200; opacity: 0; }
+    to   { stroke-dashoffset: 0;    opacity: 1; }
+}
+.hc-hand-stroke {
+    stroke-dasharray: 1200;
+    animation: hc-draw 2.4s var(--hc-ease-soft) 0.4s forwards;
+}
+
+/* Floating chip animation (used inside preview) */
+@keyframes hc-float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+}
+.hc-float { animation: hc-float 4s ease-in-out infinite; }
+
+/* Soft blink dot */
+@keyframes hc-blink {
+    0%, 100% { opacity: 0.4; }
+    50%      { opacity: 1; }
+}
+.hc-blink { animation: hc-blink 1.4s ease-in-out infinite; }
+
+/* Theme keyword band — subtle hover scale */
+.hc-keyword {
+    display: inline-block;
+    transition: transform 200ms var(--hc-ease), color 200ms var(--hc-ease);
+}
+.hc-keyword:hover {
+    transform: translateY(-2px);
+}
+
+/* Audience card top-bar accent strip */
+.hc-card-top-accent {
+    position: relative;
+}
+.hc-card-top-accent::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 30%; height: 3px;
+    background: var(--hc-primary);
+    border-radius: 0 0 999px 999px;
+    transition: width 200ms var(--hc-ease);
+}
+.hc-card-top-accent:hover::before { width: 60%; }
+
+
+/* ───────────────────────────────────────────────────────────────────────────
+   16. UTILITIES
+   ─────────────────────────────────────────────────────────────────────────── */
+.text-primary { color: var(--hc-primary); }
+.text-accent  { color: var(--hc-accent); }
+.text-soft    { color: var(--hc-text-soft); }
+.text-muted   { color: var(--hc-text-muted); }
+.text-faint   { color: var(--hc-text-faint); }
+.bg-primary-soft { background: var(--hc-primary-soft); }
+.bg-accent-soft  { background: var(--hc-accent-soft); }
+.divide-y-soft > * + * { border-top: 1px solid var(--hc-border-soft); }
+
+[x-cloak] { display: none !important; }

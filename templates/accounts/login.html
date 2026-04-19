@@ -1,0 +1,51 @@
+{% extends "layouts/auth_base.html" %}
+
+{% block title %}Sign in — {{ APP_NAME }}{% endblock %}
+{% block heading %}Welcome back{% endblock %}
+{% block subtitle %}Sign in to continue to your dashboard{% endblock %}
+{% block tab_login_active %}is-active{% endblock %}
+
+{% block content %}
+<form method="post" class="space-y-5">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <div class="rounded-lg border border-red-200 bg-red-50 p-3 text-[13px] text-red-700">
+        {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+    </div>
+    {% endif %}
+
+    <div>
+        <label for="id_username" class="block text-[12.5px] font-semibold text-soft mb-1.5">Email</label>
+        <input type="email" name="username" id="id_username" required autofocus autocomplete="email"
+               value="{{ form.username.value|default:'' }}"
+               placeholder="you@example.com"
+               class="hc-input">
+        {% if form.username.errors %}<p class="mt-1.5 text-[12px] text-red-500">{{ form.username.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div>
+        <div class="flex items-center justify-between mb-1.5">
+            <label for="id_password" class="block text-[12.5px] font-semibold text-soft">Password</label>
+            <a href="{% url 'password_reset' %}" class="text-[12px] font-medium text-primary hover:underline">Forgot?</a>
+        </div>
+        <input type="password" name="password" id="id_password" required autocomplete="current-password"
+               placeholder="••••••••"
+               class="hc-input">
+        {% if form.password.errors %}<p class="mt-1.5 text-[12px] text-red-500">{{ form.password.errors.0 }}</p>{% endif %}
+    </div>
+
+    <label class="flex items-center gap-2 text-[13px] text-soft cursor-pointer">
+        <input type="checkbox" name="remember" class="w-4 h-4 rounded border-[var(--hc-border)] text-primary focus:ring-primary">
+        Remember me on this device
+    </label>
+
+    <button type="submit" class="hc-btn hc-btn-primary w-full" style="padding: 0.85rem 1rem;">
+        Sign In
+    </button>
+</form>
+{% endblock %}
+
+{% block footer_links %}
+    By signing in you agree to our <a href="#" class="text-primary hover:underline">Terms</a> and <a href="#" class="text-primary hover:underline">Privacy Policy</a>.
+{% endblock %}

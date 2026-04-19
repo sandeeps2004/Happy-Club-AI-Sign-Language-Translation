@@ -1,0 +1,17 @@
+{% extends "layouts/auth_base.html" %}
+
+{% block title %}404 — Page Not Found{% endblock %}
+{% block subtitle %}Page not found{% endblock %}
+
+{% block content %}
+<div class="text-center">
+    <p class="text-6xl font-bold text-gray-200 dark:text-gray-700 mb-4">404</p>
+    <p class="text-sm text-gray-600 dark:text-gray-400 mb-6">
+        The page you're looking for doesn't exist or has been moved.
+    </p>
+    <a href="/"
+       class="inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-primary-600 rounded-lg hover:bg-primary-700 transition shadow-sm">
+        Go home
+    </a>
+</div>
+{% endblock %}

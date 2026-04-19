@@ -1,0 +1,78 @@
+{% load core_tags %}
+<!-- Command Palette (Ctrl+K) -->
+<div x-data="{
+        open: false,
+        search: '',
+        commands: [
+            { name: 'Dashboard', url: '/dashboard/', icon: 'home' },
+            { name: 'Sign Interpreter', url: '/sign-language/interpreter/', icon: 'hand' },
+            { name: 'Profile', url: '/accounts/profile/', icon: 'user' },
+            {% if user|has_role:"admin" %}
+            { name: 'Django Admin', url: '/admin/', icon: 'cog' },
+            {% endif %}
+        ],
+        get filtered() {
+            if (!this.search) return this.commands;
+            return this.commands.filter(c => c.name.toLowerCase().includes(this.search.toLowerCase()));
+        },
+        go(url) { window.location.href = url; },
+     }"
+     @open-command-palette.window="open = true; $nextTick(() => $refs.searchInput.focus())"
+     @keydown.window.ctrl.k.prevent="open = !open; if(open) $nextTick(() => $refs.searchInput.focus())"
+     @keydown.escape.window="open = false"
+     x-show="open" x-cloak>
+
+    <!-- Backdrop -->
+    <div class="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+         @click="open = false"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0">
+    </div>
+
+    <!-- Palette -->
+    <div class="fixed inset-0 z-50 flex items-start justify-center pt-[20vh] px-4"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 scale-95"
+         x-transition:enter-end="opacity-100 scale-100"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 scale-100"
+         x-transition:leave-end="opacity-0 scale-95">
+
+        <div class="w-full max-w-lg bg-white dark:bg-gray-800 rounded-2xl shadow-2xl ring-1 ring-gray-200 dark:ring-gray-700 overflow-hidden"
+             @click.outside="open = false">
+
+            <!-- Search Input -->
+            <div class="flex items-center gap-3 px-4 border-b border-gray-200 dark:border-gray-700">
+                <svg class="w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                </svg>
+                <input x-ref="searchInput" x-model="search" type="text"
+                       placeholder="Type a command or search..."
+                       class="w-full py-4 text-sm bg-transparent border-0 outline-none text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:ring-0">
+                <kbd class="px-2 py-0.5 text-xs font-mono text-gray-400 bg-gray-100 dark:bg-gray-700 rounded">
+                    Esc
+                </kbd>
+            </div>
+
+            <!-- Results -->
+            <div class="max-h-72 overflow-y-auto py-2">
+                <template x-for="cmd in filtered" :key="cmd.name">
+                    <button @click="go(cmd.url)"
+                            class="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                        <svg class="w-4 h-4 text-gray-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                        </svg>
+                        <span x-text="cmd.name"></span>
+                    </button>
+                </template>
+                <div x-show="filtered.length === 0" class="px-4 py-6 text-center text-sm text-gray-400">
+                    No commands found.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

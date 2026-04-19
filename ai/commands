@@ -1,0 +1,42 @@
+cd ~/Downloads/happy_club_pipeline
+source venv/bin/activate
+
+# ── Test pipeline (no webcam) ──
+python demo.py --test
+
+# ── Full accuracy benchmark ──
+python demo.py --benchmark
+
+# ── Test sentence assembly with local Qwen3 ──
+python sentence_assembler.py
+
+# ── Live webcam mode ──
+# Sign in front of camera | SPACE = assemble sentence | C = clear | Q = quit
+python demo.py
+
+# ── Retrain model (if you add more data) ──
+python setup_dataset.py --download --extract
+python train.py
+
+# ── Switch LLM provider (edit config.py) ──
+# Local Qwen3 (default, no key needed):
+#   LLM_PROVIDER = "local"
+#
+# Gemini API:
+#   LLM_PROVIDER = "gemini"
+#   export GEMINI_API_KEY=your-key
+#
+# Anthropic API:
+#   LLM_PROVIDER = "anthropic"
+#   export ANTHROPIC_API_KEY=sk-ant-...
+
+
+# Safe now (5 MB stubs)
+rm -rf ai/data/include50/{train,val,test}
+
+# Optionally reclaim 18 GB (when you're ready)
+rm -rf ai/data/include50/raw
+
+# When you want it back — reads dataset_meta.json for the gloss filter
+cd ai && python setup_dataset.py --download
+# ~37 GB download, ~18 GB kept, resumable (skips already-downloaded ZIPs)

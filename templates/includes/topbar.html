@@ -1,0 +1,75 @@
+<header class="hc-topbar sticky top-0 z-30">
+    <div class="px-5 lg:px-10 h-16 flex items-center justify-between gap-4">
+
+        {# Left: mobile toggle + page title #}
+        <div class="flex items-center gap-3 min-w-0">
+            <button @click="sidebarOpen = !sidebarOpen"
+                    class="lg:hidden p-2 -ml-2 rounded-lg text-muted hover:text-soft hover:bg-white/5 transition-colors"
+                    aria-label="Toggle sidebar">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+                </svg>
+            </button>
+
+            <h1 class="font-serif text-[18px] font-semibold leading-none truncate" style="color: var(--hc-text);">
+                {% block page_title %}{% endblock %}
+            </h1>
+        </div>
+
+        {# Right: search + avatar #}
+        <div class="flex items-center gap-2">
+
+            {# Search input #}
+            <div class="hidden md:flex items-center gap-2 hc-input w-[260px]" style="padding: 0.4rem 0.75rem;">
+                <svg class="w-4 h-4 text-muted flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                    <path d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
+                </svg>
+                <input type="text" placeholder="Search signs..."
+                       class="flex-1 bg-transparent border-0 outline-none text-[13px] placeholder:text-faint"
+                       style="color: var(--hc-text);">
+                <kbd class="text-[10px] font-mono text-faint px-1.5 py-0.5 rounded border" style="border-color: rgba(255,255,255,0.10);">⌘K</kbd>
+            </div>
+
+            {# Profile dropdown #}
+            <details class="relative group">
+                <summary class="list-none cursor-pointer relative ring-2 ring-mint/40 rounded-full transition-all hover:ring-mint">
+                    {% if user.avatar %}
+                    <img src="{{ user.avatar.url }}" alt="" class="w-9 h-9 rounded-full object-cover">
+                    {% else %}
+                    <div class="w-9 h-9 rounded-full flex items-center justify-center text-[12px] font-bold text-white"
+                         style="background: linear-gradient(135deg, #4ecca3 0%, #2c8a72 100%);">
+                        {{ user.initials }}
+                    </div>
+                    {% endif %}
+                </summary>
+
+                <div class="absolute right-0 mt-2 w-56 hc-glass-strong p-1.5 z-50
+                            opacity-0 invisible group-open:opacity-100 group-open:visible
+                            scale-95 group-open:scale-100 origin-top-right
+                            transition-all duration-150">
+                    <div class="px-3.5 py-3 border-b border-white/10">
+                        <p class="text-[13px] font-semibold text-soft">{{ user.display_name }}</p>
+                        <p class="text-[11px] text-muted truncate mt-0.5">{{ user.email }}</p>
+                    </div>
+                    <a href="{% url 'profile' %}" class="flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-[13px] text-soft hover:bg-white/5 transition-colors">
+                        <svg class="w-4 h-4 text-muted" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                            <path d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
+                        </svg>
+                        My profile
+                    </a>
+                    <div class="border-t border-white/10 mt-1 pt-1">
+                        <form method="post" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-[13px] text-coral hover:bg-coral/10 transition-colors">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <path d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"/>
+                                </svg>
+                                Sign out
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </details>
+        </div>
+    </div>
+</header>

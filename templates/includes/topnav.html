@@ -1,0 +1,107 @@
+{% load core_tags %}
+{% with current=request.resolver_match.url_name %}
+
+<nav class="hc-nav">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <div class="flex items-center justify-between h-16">
+
+            {# Logo #}
+            <a href="{% url 'dashboard' %}" class="flex items-center gap-2.5 group">
+                <div class="w-9 h-9 rounded-xl bg-primary flex items-center justify-center text-white shadow-sm group-hover:shadow-md transition-shadow">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M10.05 4.575a1.575 1.575 0 1 0-3.15 0v3m3.15-3v-1.5a1.575 1.575 0 0 1 3.15 0v1.5m-3.15 0 .075 5.925m3.075-5.925v3m0-3a1.575 1.575 0 0 1 3.15 0v3.75m0 0v2.018a3 3 0 0 1-.879 2.121l-2.377 2.377a3.622 3.622 0 0 1-.68.523M7.5 14.25a3 3 0 0 0-.621-1.833L5.131 9.948A1.575 1.575 0 0 0 2.4 11.523v.002c0 .468.11.93.321 1.35l.803 1.603A5.625 5.625 0 0 0 8.558 18h3.567a3.622 3.622 0 0 0 2.062-.68"/>
+                    </svg>
+                </div>
+                <span class="text-[15px] font-bold tracking-tight text-ink">{{ APP_NAME|default:"Happy Club" }}</span>
+            </a>
+
+            {# Center pill nav (desktop) #}
+            <div class="hidden md:flex hc-nav-pill">
+                <a href="{% url 'dashboard' %}" class="hc-nav-link {% if current == 'dashboard' %}is-active{% endif %}">Home</a>
+                <a href="{% url 'sign_language_interpreter' %}" class="hc-nav-link {% if current == 'sign_language_interpreter' %}is-active{% endif %}">Sign Interpreter</a>
+                <a href="{% url 'text_to_sign_translator' %}" class="hc-nav-link {% if current == 'text_to_sign_translator' %}is-active{% endif %}">Text to Sign</a>
+            </div>
+
+            {# Right side #}
+            <div class="flex items-center gap-2">
+                {% if user.is_authenticated %}
+                    <details class="relative group">
+                        <summary class="list-none cursor-pointer flex items-center gap-2 p-1 pr-3 rounded-full hover:bg-[var(--hc-bg-muted)] transition-colors">
+                            {% if user.avatar %}
+                            <img src="{{ user.avatar.url }}" alt="" class="w-8 h-8 rounded-full object-cover">
+                            {% else %}
+                            <div class="w-8 h-8 rounded-full bg-primary text-white flex items-center justify-center text-[12px] font-bold">
+                                {{ user.initials }}
+                            </div>
+                            {% endif %}
+                            <span class="hidden sm:block text-[13px] font-semibold text-ink">{{ user.first_name|default:user.email }}</span>
+                            <svg class="w-3.5 h-3.5 text-faint" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                <path d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+                            </svg>
+                        </summary>
+
+                        <div class="absolute right-0 mt-2 w-56 hc-card p-1.5 z-50 shadow-lg
+                                    opacity-0 invisible group-open:opacity-100 group-open:visible
+                                    scale-95 group-open:scale-100 origin-top-right transition-all duration-150">
+                            <div class="px-3.5 py-3 border-b border-[var(--hc-border-soft)]">
+                                <p class="text-[13px] font-semibold text-ink">{{ user.display_name }}</p>
+                                <p class="text-[11px] text-muted truncate mt-0.5">{{ user.email }}</p>
+                            </div>
+                            <a href="{% url 'profile' %}" class="flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-[13px] text-soft hover:bg-[var(--hc-bg-muted)] transition-colors">
+                                <svg class="w-4 h-4 text-muted" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <path d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
+                                </svg>
+                                Profile
+                            </a>
+                            {% if user|has_role:"admin" %}
+                            <a href="/admin/" class="flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-[13px] text-soft hover:bg-[var(--hc-bg-muted)] transition-colors">
+                                <svg class="w-4 h-4 text-muted" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                    <path d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"/>
+                                    <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                                </svg>
+                                Admin
+                            </a>
+                            {% endif %}
+                            <div class="border-t border-[var(--hc-border-soft)] mt-1 pt-1">
+                                <form method="post" action="{% url 'logout' %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="w-full flex items-center gap-2.5 px-3.5 py-2 rounded-lg text-[13px] text-[var(--hc-error)] hover:bg-red-50 transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                                            <path d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9"/>
+                                        </svg>
+                                        Sign out
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </details>
+                {% else %}
+                    <a href="{% url 'login' %}" class="hc-btn hc-btn-primary" style="padding: 0.5rem 1rem; font-size: 13px;">Sign In</a>
+                {% endif %}
+
+                {# Mobile menu toggle #}
+                <button @click="mobileOpen = !mobileOpen" class="md:hidden p-2 rounded-lg text-muted hover:bg-[var(--hc-bg-muted)] transition-colors">
+                    <svg x-show="!mobileOpen" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
+                    </svg>
+                    <svg x-show="mobileOpen" x-cloak class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+                        <path d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        {# Mobile menu #}
+        <div x-show="mobileOpen" x-cloak
+             x-transition:enter="transition ease-out duration-200"
+             x-transition:enter-start="opacity-0 -translate-y-2"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             class="md:hidden border-t border-[var(--hc-border-soft)] py-3 space-y-1">
+            <a href="{% url 'dashboard' %}" class="block px-3 py-2.5 rounded-lg text-[14px] font-semibold text-ink hover:bg-[var(--hc-bg-muted)]">Home</a>
+            <a href="{% url 'sign_language_interpreter' %}" class="block px-3 py-2.5 rounded-lg text-[14px] font-semibold text-ink hover:bg-[var(--hc-bg-muted)]">Sign Interpreter</a>
+            <a href="{% url 'text_to_sign_translator' %}" class="block px-3 py-2.5 rounded-lg text-[14px] font-semibold text-ink hover:bg-[var(--hc-bg-muted)]">Text to Sign</a>
+        </div>
+    </div>
+</nav>
+
+{% endwith %}

@@ -1,0 +1,76 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Profile — {{ APP_NAME }}{% endblock %}
+{% block page_title %}Profile{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto space-y-4">
+    <!-- Header Card -->
+    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-5">
+        <div class="flex items-center gap-4">
+            {% if user.avatar %}
+            <img src="{{ user.avatar.url }}" alt="" class="w-16 h-16 rounded-full object-cover">
+            {% else %}
+            <div class="w-16 h-16 rounded-full bg-primary-600 flex items-center justify-center text-xl font-bold text-white flex-shrink-0">
+                {{ user.initials }}
+            </div>
+            {% endif %}
+            <div>
+                <h2 class="text-lg font-bold text-gray-900 dark:text-gray-100">{{ user.display_name }}</h2>
+                <p class="text-sm text-gray-500 dark:text-gray-400">{{ user.email }}</p>
+                <span class="inline-block mt-1 px-2 py-0.5 text-[10px] font-semibold rounded-full capitalize bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300">{{ user.role }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Form -->
+    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-5">
+        <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">Edit Profile</h3>
+        <form method="post" enctype="multipart/form-data" class="space-y-4">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="id_first_name" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">First name</label>
+                    {{ form.first_name }}
+                </div>
+                <div>
+                    <label for="id_last_name" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Last name</label>
+                    {{ form.last_name }}
+                </div>
+            </div>
+            <div>
+                <label for="id_phone" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Phone</label>
+                {{ form.phone }}
+            </div>
+            <div>
+                <label for="id_bio" class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Bio</label>
+                {{ form.bio }}
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">Avatar</label>
+                {{ form.avatar }}
+            </div>
+            <div class="flex justify-end pt-2">
+                <button type="submit" class="bg-primary-600 hover:bg-primary-700 text-white font-semibold px-6 py-2.5 rounded-lg transition">Save changes</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- Account Info -->
+    <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-800 p-5">
+        <h3 class="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-4">Account</h3>
+        <dl class="space-y-3 text-sm">
+            <div class="flex justify-between"><dt class="text-gray-500 dark:text-gray-400">Email</dt><dd class="font-medium text-gray-900 dark:text-gray-100">{{ user.email }}</dd></div>
+            <div class="flex justify-between"><dt class="text-gray-500 dark:text-gray-400">Role</dt><dd class="font-medium text-gray-900 dark:text-gray-100 capitalize">{{ user.role }}</dd></div>
+            <div class="flex justify-between"><dt class="text-gray-500 dark:text-gray-400">Member since</dt><dd class="font-medium text-gray-900 dark:text-gray-100">{{ user.date_joined|date:"M d, Y" }}</dd></div>
+            <div class="flex justify-between">
+                <dt class="text-gray-500 dark:text-gray-400">Email verified</dt>
+                <dd>{% if user.is_email_verified %}<span class="text-green-600 dark:text-green-400 font-medium">Verified</span>{% else %}<span class="text-yellow-600 dark:text-yellow-400 font-medium">Pending</span>{% endif %}</dd>
+            </div>
+        </dl>
+        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800">
+            <a href="{% url 'password_reset' %}" class="text-sm text-primary-600 dark:text-primary-400 hover:underline font-medium">Change password</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

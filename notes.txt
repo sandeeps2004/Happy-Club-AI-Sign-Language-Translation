@@ -1,0 +1,7 @@
+
+1. backend: django (python based framework)
+2. frontend: django template (html, tailwind css, alpine.js)
+3. database: sqlite3
+4. AI: 
+    model: ai-bharat from huggingface (small)
+            Zenodo include50 (bigger)

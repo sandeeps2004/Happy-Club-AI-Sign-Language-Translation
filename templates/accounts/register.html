@@ -1,0 +1,64 @@
+{% extends "layouts/auth_base.html" %}
+
+{% block title %}Create account — {{ APP_NAME }}{% endblock %}
+{% block heading %}Create your account{% endblock %}
+{% block subtitle %}Join the platform in under a minute{% endblock %}
+{% block tab_register_active %}is-active{% endblock %}
+
+{% block content %}
+<form method="post" class="space-y-4">
+    {% csrf_token %}
+
+    {% if form.non_field_errors %}
+    <div class="rounded-lg border border-red-200 bg-red-50 p-3 text-[13px] text-red-700">
+        {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+    </div>
+    {% endif %}
+
+    <div class="grid grid-cols-2 gap-3">
+        <div>
+            <label for="id_first_name" class="block text-[12.5px] font-semibold text-soft mb-1.5">First name</label>
+            {{ form.first_name }}
+            {% if form.first_name.errors %}<p class="mt-1.5 text-[12px] text-red-500">{{ form.first_name.errors.0 }}</p>{% endif %}
+        </div>
+        <div>
+            <label for="id_last_name" class="block text-[12.5px] font-semibold text-soft mb-1.5">Last name</label>
+            {{ form.last_name }}
+            {% if form.last_name.errors %}<p class="mt-1.5 text-[12px] text-red-500">{{ form.last_name.errors.0 }}</p>{% endif %}
+        </div>
+    </div>
+
+    <div>
+        <label for="id_email" class="block text-[12.5px] font-semibold text-soft mb-1.5">Email</label>
+        {{ form.email }}
+        {% if form.email.errors %}<p class="mt-1.5 text-[12px] text-red-500">{{ form.email.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div>
+        <label for="id_role" class="block text-[12.5px] font-semibold text-soft mb-1.5">Account type</label>
+        {{ form.role }}
+        {% if form.role.errors %}<p class="mt-1.5 text-[12px] text-red-500">{{ form.role.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div>
+        <label for="id_password1" class="block text-[12.5px] font-semibold text-soft mb-1.5">Password</label>
+        {{ form.password1 }}
+        {% if form.password1.errors %}<p class="mt-1.5 text-[12px] text-red-500">{{ form.password1.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div>
+        <label for="id_password2" class="block text-[12.5px] font-semibold text-soft mb-1.5">Confirm password</label>
+        {{ form.password2 }}
+        {% if form.password2.errors %}<p class="mt-1.5 text-[12px] text-red-500">{{ form.password2.errors.0 }}</p>{% endif %}
+    </div>
+
+    <button type="submit" class="hc-btn hc-btn-primary w-full mt-2" style="padding: 0.85rem 1rem;">
+        Create account
+    </button>
+</form>
+{% endblock %}
+
+{% block footer_links %}
+    Already have an account?
+    <a href="{% url 'login' %}" class="font-semibold text-primary hover:underline">Sign in</a>
+{% endblock %}
