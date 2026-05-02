@@ -113,6 +113,33 @@ Real-time Indian Sign Language (ISL) recognition system that translates webcam v
 ### Dataset Distribution
 ![Dataset Distribution](ai/charts/07_dataset_distribution.png)
 
+## Results
+
+### Home Page
+Home Page highlights the 33ms real-time pipeline — Capture, Extract, Predict, and Translate — targeting the Deaf, Interpreters, and Educators, with a call-to-action to begin interpreting or try text-to-sign.
+
+![Home Page](screenshots/01_home_page.jpg)
+
+### Sign Interpreter — Real-Time Keypoint Visualization
+Sign Interpreter Page shows the real-time interpretation interface with hand keypoint visualization and live English sentence output at the bottom of the screen.
+
+![Sign Interpreter Keypoints](screenshots/02_sign_interpreter_keypoints.jpg)
+
+### Sign to Text
+Sign Interpreter Page demonstrates the live ISL recognition interface where a user's signing is captured via webcam, with the BiLSTM model predicting the sign "Fish" at 90.2% confidence and assembling it into an English sentence in real time.
+
+![Sign to Text](screenshots/03_sign_to_text.jpg)
+
+### Text to Sign
+An interactive text-to-sign feature that transforms typed sentences into animated sign language sequences for better understanding and accessibility.
+
+![Text to Sign](screenshots/04_text_to_sign.jpg)
+
+### Text to Sign & Admin Panel
+Text-to-sign translation interface and Django administration panel for managing Users, Groups, and Interpretation Sessions.
+
+![Text to Sign & Admin](screenshots/05_text_to_sign_admin.jpg)
+
 ## Features
 - **Real-Time Sign Detection**: Live webcam feed with RTMPose skeleton overlay and instant sign prediction
 - **ISL → English Translation**: Recognized ISL glosses assembled into grammatically correct English sentences
