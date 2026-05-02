@@ -115,7 +115,27 @@ Real-time Indian Sign Language (ISL) recognition system that translates webcam v
 
 ## Results
 
-### Home Page
+### Login Page
+A clean and modern sign-in page designed for the AI-powered platform that enables real-time sign language translation and accessibility.
+
+![Login](screenshots/00_login.png)
+
+### Home Page — Hero
+Where hands speak, words appear. The landing page showcasing the platform's mission — translating Indian Sign Language into fluent English in real time.
+
+![Home Hero](screenshots/00_home_hero.png)
+
+### Home Page — Features
+The landing page with two core modules — Sign Interpreter and Text to Sign — for bidirectional ISL-English communication.
+
+![Home Features](screenshots/00_home_features.png)
+
+### Sign Interpreter — Live Keypoint Detection
+Real-time interpretation interface with hand keypoint visualization and live English sentence output: *"Hello, how are you my friend?"*
+
+![Sign Interpreter Live](screenshots/00_sign_interpreter_live.png)
+
+### Home Page — Pipeline
 Home Page highlights the 33ms real-time pipeline — Capture, Extract, Predict, and Translate — targeting the Deaf, Interpreters, and Educators, with a call-to-action to begin interpreting or try text-to-sign.
 
 ![Home Page](screenshots/01_home_page.jpg)
