@@ -120,7 +120,7 @@ A clean and modern sign-in page designed for the AI-powered platform that enable
 
 ![Login](screenshots/00_login.png)
 
-### Home Page — Hero
+### Home Page 
 Where hands speak, words appear. The landing page showcasing the platform's mission — translating Indian Sign Language into fluent English in real time.
 
 ![Home Hero](screenshots/00_home_hero.png)
@@ -139,11 +139,6 @@ Real-time interpretation interface with hand keypoint visualization and live Eng
 Home Page highlights the 33ms real-time pipeline — Capture, Extract, Predict, and Translate — targeting the Deaf, Interpreters, and Educators, with a call-to-action to begin interpreting or try text-to-sign.
 
 ![Home Page](screenshots/01_home_page.jpg)
-
-### Sign Interpreter — Real-Time Keypoint Visualization
-Sign Interpreter Page shows the real-time interpretation interface with hand keypoint visualization and live English sentence output at the bottom of the screen.
-
-![Sign Interpreter Keypoints](screenshots/02_sign_interpreter_keypoints.jpg)
 
 ### Sign to Text
 Sign Interpreter Page demonstrates the live ISL recognition interface where a user's signing is captured via webcam, with the BiLSTM model predicting the sign "Fish" at 90.2% confidence and assembling it into an English sentence in real time.
