@@ -1,3 +1,5 @@
+# Happy Club — AI Sign Language Translation
+
 Real-time Indian Sign Language (ISL) recognition system that translates webcam video of sign language into natural English sentences. Built with Django, WebSockets, a BiLSTM deep learning model, RTMPose for skeleton tracking, and Gemini 2.5 Flash for sentence assembly.
 
 ![Dashboard](ai/charts/00_dashboard.png)
