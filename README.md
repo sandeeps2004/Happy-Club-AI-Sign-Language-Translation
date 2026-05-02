@@ -52,7 +52,7 @@ Real-time Indian Sign Language (ISL) recognition system that translates webcam v
 | **Auth** | Custom User model with email login, RBAC | Role-based access control and session management |
 | **Templating** | Django Templates + HTMX + widget-tweaks | Server-rendered UI with dynamic interactions |
 
-## ML/AI Techniques Used
+## Techniques Used
 | Technique | Implementation | Details |
 |-----------|---------------|---------|
 | **Pose Estimation** | RTMPose WholeBody (ONNX) | 133 keypoints → 54 selected (12 upper body + 21 left hand + 21 right hand) |
